@@ -31,7 +31,7 @@ for done in range(iterations):
     optimizer.step()                # Update model's parameters
 
     # Type progress every {bellow} iterations
-    if done % 10000 == 0:
+    if done % (iterations // 10) == 0:
         print(f"Done {done} in {iterations}: loss = {loss.item()}")
 
 
