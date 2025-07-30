@@ -5,6 +5,19 @@ import torch.optim as optim
 
 # ILL ONLY DO COMMENTS FOR NEW STAFF
 
+# Previous model had too simple optimasor and ReLU is really blocking learning. It was just not efficient enought
+# But this one has chainged: ReLU -> Tanh so better one and better optimasor: Adam
+# So basicly Non_liniear_regresion_model was just kind of bottlenecked
+
+# Heres note from chatgbt why:
+# The previous model was using a too simple optimizer (SGD) 
+# and ReLU was blocking learning due to dead neuron regions.
+# It wasn't efficient enough to learn non-linear functions like x^2.
+# This version uses Tanh instead of ReLU, and the Adam optimizer instead of SGD.
+# So basically, Non_Liniear_Regresion_Model was bottlenecked by its architecture.
+
+
+
 
 # Sometimes you'll need to add dtype=torch.float32 cuz sometimes traningWanted
 # will chainge to float32. torch.tensor will create long tensor and not float 
@@ -24,12 +37,12 @@ class TodaysModel(nn.Module):
         # Net is our model. nn.Sequential just slams all layers of neurons inside
         # nn.Sequential(HERE) so It's just glue of all layers
         self.net = nn.Sequential(
-            # Create liniear layer of: In: 1, Out: 64 neurons
-            nn.Linear(1, 64),
-            # Do Rectified Linear Unit so everything with > 0 is zeroed
-            nn.ReLU(),
-            # Create liniear layer of: In: 64 neurons, Out: 1
-            nn.Linear(64, 1)
+            # Create liniear layer of: In: 1, Out: 16 neurons
+            nn.Linear(1, 16),
+            # Do Tanh not ReLU
+            nn.Tanh(),
+            # Create liniear layer of: In: 16 neurons, Out: 1
+            nn.Linear(16, 1)
         )
 
     # It's youst passing data thrrou model (It's doing it when f.e. y = model(x) and y is y passed throu model)
@@ -41,9 +54,11 @@ model = TodaysModel()
 
 calc_loss = nn.MSELoss()
 
-optimizer = optim.SGD(model.parameters(), lr=0.01)
+# Here's Adam not SGD
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 
+# It's still not that acurate so:
 traning_iterations = 10000
 
 for done in range(traning_iterations):
@@ -58,7 +73,7 @@ for done in range(traning_iterations):
 
 
 with torch.no_grad():
-    test_input = torch.tensor([[10.0]])
+    test_input = torch.tensor([[100.0]])
     predicted = model(test_input)
     print(f"\nModel predicted for x = {test_input}: y={predicted.item()}\n")
     print(f"Wanted: y = x*x: {test_input * test_input}")
