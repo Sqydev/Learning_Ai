@@ -7,7 +7,9 @@ import torch.optim as optim
 
 
 # Making data that follows rule
-x = torch.tensor([[1.0], [2.0], [3.0], [4.0]])
+# x = torch.tensor([[1.0], [2.0], [3.0], [4.0]])
+# Here's bigger trainingdata:
+x = torch.linspace(0, 100, 1000).unsqueeze(1)
 y = 2 * x + 1
 
 class TodaysModel(nn.Module):
@@ -31,7 +33,7 @@ model = TodaysModel()
 
 loss_fn = nn.MSELoss()
 
-optimizer = optim.SGD(model.parameters(), lr=0.01)
+optimizer = optim.SGD(model.parameters(), lr=0.00001) # Btw. Idk why but 0.01 lr is too much
 
 
 # Number of iterations
@@ -46,13 +48,13 @@ for done in range(iterations):
     optimizer.step()                # Update model's parameters
 
     # Type progress every {bellow} iterations
-    if done % (traning_iterations // 100) == 0:
-        print(f"Done {done} / {traning_iterations} ({done / traning_iterations:.0%}): loss = {loss.item()}")
+    if done % (iterations // 100) == 0:
+        print(f"Done {done} / {iterations} ({done / iterations:.0%}): loss = {loss.item()}")
 
 
 # Turn autograd off - testing
 with torch.no_grad():
-    test_input = torch.tensor([[11.0]])
+    test_input = torch.tensor([[101.0]])
     predicted = model(test_input)
     print(f"\nModel predicted for x = {test_input}: y={predicted.item()}\n")
     print(f"Wanted: 2x + 1 = y: {test_input * 2 + 1}")

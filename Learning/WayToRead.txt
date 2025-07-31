@@ -1,4 +1,6 @@
+0. NOTESFORALL.txt
 1. Tensors.py
 2. Liniear_Regresion_Model.py
-3. Non_Liniear_Regresion_Model.py
-4. Tryial1.py
+3. Non_Liniear_Regresion_Model(too bad).py
+4. Non_Liniear_Regresion_Model(that good).py
+5. Tryial1.py

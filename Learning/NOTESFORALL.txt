@@ -1,0 +1,1 @@
+Models learn for specific cases so If it was trained for cases of 0-100 if you'll give it bigger or lesser number it will  not woark

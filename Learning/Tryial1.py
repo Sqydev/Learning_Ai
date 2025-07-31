@@ -4,8 +4,13 @@ import torch.optim as optim
 
 
 # Setup Training Data
-TrainingDataFrom1 = torch.linspace(0, 100, 100).unsqueeze(1)
-TrainingDataFrom2 = torch.linspace(0, 100, 100).unsqueeze(1)
+# There's TrainingDataFrom1 = torch.rand(1000, 1) * 100 and not
+# TrainingDataFrom1 = torch.linspace(0, 100, 100).unsqueeze(1)
+# cuz Then model only learns cases where TrainingDataFrom1 and TrainingDataFrom2
+# is the same why? cuz it generates tensor like this [[1], [2], [3]...]
+# and TrainingDataFrom1 = torch.rand(1000, 1) * 100 makes it really random
+TrainingDataFrom1 = torch.rand(1000, 1) * 100
+TrainingDataFrom2 = torch.rand(1000, 1) * 100
 TrainingDataTo = (3 * TrainingDataFrom1) - (2 * TrainingDataFrom2) + 4
 
 
@@ -36,7 +41,7 @@ calc_loss = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 
-trainingIterations = 100000
+trainingIterations = 50000
 
 for done in range(trainingIterations):
     models_prediction = model(TrainingDataFrom1, TrainingDataFrom2)
@@ -49,8 +54,8 @@ for done in range(trainingIterations):
         print(f"Done {done} / {trainingIterations} ({done / trainingIterations:.0%}): loss = {loss.item()}")
 
 with torch.no_grad():
-    test_input1 = torch.tensor([[10.0]])
-    test_input2 = torch.tensor([[50.0]])
+    test_input1 = torch.tensor([[100.0]])
+    test_input2 = torch.tensor([[100.0]])
     predicted = model(test_input1, test_input2)
     print(f"\nModel predicted for x = {test_input1} and y = {test_input2}: z={predicted.item()}\n")
-    print(f"Wanted: z = 3x - 2y + 4: {3 * test_input1 - 2 * test_input2 + 4}")
+    print(f"Wanted: z = 3x - 2y + 4: {(3 * test_input1) - (2 * test_input2) + 4}")

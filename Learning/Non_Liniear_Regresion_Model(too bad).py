@@ -19,7 +19,7 @@ import torch.optim as optim
 # trainingFrom = torch.tensor([[10], [15], [2], [621], [1], [741]], dtype=torch.float32)
 
 # But it will all go to trash cuz model does not have sufficient ammount of data to train
-# so here's data generatorythingie
+# so here's data maker that's generates tensor 100x1 like this [[1], [2], [3], [4]]
 trainingFrom = torch.linspace(0, 100, 1000).unsqueeze(1)
 
 traningWanted = trainingFrom * trainingFrom

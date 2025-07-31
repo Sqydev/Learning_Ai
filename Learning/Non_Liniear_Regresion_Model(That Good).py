@@ -58,7 +58,7 @@ calc_loss = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 # Pretty ok number of iterations
-traning_iterations = 1000000
+traning_iterations = 100000
 
 for done in range(traning_iterations):
     models_prediction = model(trainingFrom)
@@ -72,7 +72,7 @@ for done in range(traning_iterations):
         print(f"Done {done} / {traning_iterations} ({done / traning_iterations:.0%}): loss = {loss.item()}")
 
 with torch.no_grad():
-    test_input = torch.tensor([[100.0]])
+    test_input = torch.tensor([[50.0]])
     predicted = model(test_input)
     print(f"\nModel predicted for x = {test_input}: y={predicted.item()}\n")
     print(f"Wanted: y = x*x: {test_input * test_input}")
