@@ -27,7 +27,6 @@ import torch.optim as optim
 # But it will all go to trash cuz model does not have sufficient ammount of data to train
 # so here's data generatorythingie
 trainingFrom = torch.linspace(0, 100, 1000).unsqueeze(1)
-
 traningWanted = trainingFrom * trainingFrom
 
 class TodaysModel(nn.Module):
@@ -54,12 +53,11 @@ model = TodaysModel()
 
 calc_loss = nn.MSELoss()
 
-# Here's Adam not SGD
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+# Here's Adam not SGD, this lr gives ok loss
+optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-
-# It's still not that acurate so:
-traning_iterations = 10000
+# Pretty ok number of iterations
+traning_iterations = 1000000
 
 for done in range(traning_iterations):
     models_prediction = model(trainingFrom)
@@ -68,9 +66,9 @@ for done in range(traning_iterations):
     loss.backward()
     optimizer.step()
 
-    if done % (traning_iterations // 10) == 0:
-        print(f"Done {done} in {traning_iterations}: loss = {loss.item()}")
-
+    # Also made that so it shows progres not every 10% but 1%
+    if done % (traning_iterations // 100) == 0:
+        print(f"Done {done} / {traning_iterations} ({done / traning_iterations:.0%}): loss = {loss.item()}")
 
 with torch.no_grad():
     test_input = torch.tensor([[100.0]])
