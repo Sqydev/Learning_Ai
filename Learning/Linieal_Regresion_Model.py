@@ -14,9 +14,15 @@ class TodaysModel(nn.Module):
     def __init__(self):
         # Make pytorch rejestr this model or something
         super().__init__()
-        # Making new layer of neurons
+        
+        # This is accual model, if you'll have more layers you'll need glue.
+        # But I'll describe this in Non_Liniear_Model.py after super.__init__()
+        # Create leayer leaniear of neurons(Btw. you don't need to add 
+        # self.linear(in_features=1, out_features=1) you can just do
+        # self.linear(1, 1) but I've done It here for demonstration
         self.linear = nn.Linear(in_features=1, out_features=1)
 
+    # It's youst passing data thrrou model (It's doing it when f.e. y = model(x) and y is y passed throu model)
     def forward(self, x):
         return self.linear(x)
 
@@ -40,8 +46,8 @@ for done in range(iterations):
     optimizer.step()                # Update model's parameters
 
     # Type progress every {bellow} iterations
-    if done % (iterations // 10) == 0:
-        print(f"Done {done} in {iterations}: loss = {loss.item()}")
+    if done % (traning_iterations // 100) == 0:
+        print(f"Done {done} / {traning_iterations} ({done / traning_iterations:.0%}): loss = {loss.item()}")
 
 
 # Turn autograd off - testing

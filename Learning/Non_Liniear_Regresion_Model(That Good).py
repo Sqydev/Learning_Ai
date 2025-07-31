@@ -35,6 +35,7 @@ class TodaysModel(nn.Module):
         
         # Net is our model. nn.Sequential just slams all layers of neurons inside
         # nn.Sequential(HERE) so It's just glue of all layers
+        # Also NOTE: non-linear models need activation function(In this case Tanh) :)
         self.net = nn.Sequential(
             # Create liniear layer of: In: 1, Out: 16 neurons
             nn.Linear(1, 16),
@@ -53,7 +54,7 @@ model = TodaysModel()
 
 calc_loss = nn.MSELoss()
 
-# Here's Adam not SGD, this lr gives ok loss
+# Here's Adam not SGD
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 # Pretty ok number of iterations

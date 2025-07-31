@@ -60,8 +60,8 @@ for done in range(traning_iterations):
     loss.backward()
     optimizer.step()
 
-    if done % (traning_iterations // 10) == 0:
-        print(f"Done {done} in {traning_iterations}: loss = {loss.item()}")
+    if done % (traning_iterations // 100) == 0:
+        print(f"Done {done} / {traning_iterations} ({done / traning_iterations:.0%}): loss = {loss.item()}")
 
 
 with torch.no_grad():
