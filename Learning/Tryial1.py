@@ -54,8 +54,8 @@ for done in range(trainingIterations):
         print(f"Done {done} / {trainingIterations} ({done / trainingIterations:.0%}): loss = {loss.item()}")
 
 with torch.no_grad():
-    test_input1 = torch.tensor([[100.0]])
-    test_input2 = torch.tensor([[100.0]])
+    test_input1 = torch.tensor([[10000.0]])
+    test_input2 = torch.tensor([[10000.0]])
     predicted = model(test_input1, test_input2)
     print(f"\nModel predicted for x = {test_input1} and y = {test_input2}: z={predicted.item()}\n")
     print(f"Wanted: z = 3x - 2y + 4: {(3 * test_input1) - (2 * test_input2) + 4}")
